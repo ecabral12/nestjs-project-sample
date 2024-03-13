@@ -1,11 +1,19 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Inject } from '@nestjs/common';
 import * as fs from 'fs';
 
 @Injectable()
 export class UserService {
   private clients;
+  private readonly allowedHeaders: Array<string>;
+  private readonly validatorFn: ()=>boolean;
+  private readonly transformerFn: ()=>void;
 
-  constructor() {
+
+  constructor(@Inject('CONFIG_OPTIONS') private options: Record<string, any>) {
+    const {allowedHeaders, validatorFn, transformerFn} = options;
+    this.allowedHeaders = allowedHeaders;
+    this.validatorFn = validatorFn;
+    this.transformerFn = transformerFn;
     const data = fs.readFileSync('clients.json', 'utf8');
     this.clients = JSON.parse(data).pizzas;
   }
