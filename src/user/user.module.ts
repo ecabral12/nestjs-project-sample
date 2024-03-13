@@ -8,13 +8,13 @@ import { UserService } from './user.service';
   providers: [UserService],
 })
 export class UserModule {
-  static register(options: Record<string, any>): DynamicModule {
+  static register(options: string): DynamicModule {
     return {
       module: UserModule,
       providers: [
         {
-          provide: 'CONFIG_OPTIONS',
-          useValue: options,
+          provide: UserService,
+          useValue: new UserService(),
         },
         UserModule,
       ],

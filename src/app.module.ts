@@ -5,9 +5,8 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { PizzaModule } from './pizza/pizza.module';
 import { LoggingMiddleware } from './middleWare/logger.middleware';
-
 @Module({
-  imports: [UserModule,PizzaModule],
+  imports: [UserModule.register(""),PizzaModule],
   controllers: [AppController],
   providers: [AppService],
 })
